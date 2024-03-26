@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'sms_helper.dart';
+import 'message_list_view.dart';
 
 class MessageList extends StatefulWidget {
   const MessageList({super.key});
@@ -10,7 +11,6 @@ class MessageList extends StatefulWidget {
 }
 
 class _MessageListState extends State<MessageList> {
-  SmsQuery _query = SmsQuery();
   List<SmsMessage> _messages = [];
   List<String> _body = [];
 
@@ -23,7 +23,7 @@ class _MessageListState extends State<MessageList> {
       body: Container(
         padding: const EdgeInsets.all(10.0),
         child: _messages.isNotEmpty
-            ? _MessagesListView(
+            ? MessagesListView(
                 messages: _messages,
               )
             : Center(
@@ -36,54 +36,15 @@ class _MessageListState extends State<MessageList> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          var permission = await Permission.sms.status;
-          if (permission.isGranted) {
-            final messages = await _query.querySms(
-              kinds: [
-                SmsQueryKind.inbox,
-                // SmsQueryKind.sent,
-              ],
-              address: 'CBE',
-              // count: 10,
-            );
-
-            debugPrint('sms inbox messages: ${messages.length}');
-
-            setState(() {
-              _body = messages.map((e) => e.body) as List<String>;
-              _messages = messages;
-            });
-          } else {
-            await Permission.sms.request();
-          }
+          final messages = await fetchSmsMessages();
+          debugPrint('sms inbox messages: ${messages.length}');
+          setState(() {
+            _body = messages.map((e) => e.body).toList().cast<String>();
+            _messages = messages;
+          });
         },
         child: const Icon(Icons.refresh),
       ),
-    );
-  }
-}
-
-class _MessagesListView extends StatelessWidget {
-  const _MessagesListView({
-    Key? key,
-    required this.messages,
-  }) : super(key: key);
-
-  final List<SmsMessage> messages;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: messages.length,
-      itemBuilder: (BuildContext context, int i) {
-        var message = messages[i];
-
-        return ListTile(
-          title: Text('${message.sender} [${message.date}]'),
-          subtitle: Text('${message.body}'),
-        );
-      },
     );
   }
 }
