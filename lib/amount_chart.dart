@@ -5,7 +5,7 @@ import 'package:fl_chart/fl_chart.dart';
 class AmountChart extends StatelessWidget {
   final List<SmsMessage> messages;
 
-  const AmountChart({Key? key, required this.messages}) : super(key: key);
+  const AmountChart({super.key, required this.messages});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class AmountChart extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text(
+              const Text(
                 'Balance Amounts Over Time',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
@@ -29,8 +29,8 @@ class AmountChart extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: LineChart(
                     LineChartData(
-                      gridData: FlGridData(show: false),
-                      titlesData: FlTitlesData(show: false),
+                      gridData: const FlGridData(show: false),
+                      titlesData: const FlTitlesData(show: false),
                       borderData: FlBorderData(show: true),
                       lineBarsData: _generateLineBarsData(),
                     ),

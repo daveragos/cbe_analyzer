@@ -3,9 +3,9 @@ import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
 
 class MessagesListView extends StatelessWidget {
   const MessagesListView({
-    Key? key,
+    super.key,
     required this.messages,
-  }) : super(key: key);
+  });
 
   final List<SmsMessage> messages;
 
