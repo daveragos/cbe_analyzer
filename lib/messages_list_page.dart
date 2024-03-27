@@ -55,16 +55,6 @@ class _MessageListState extends State<MessageList> {
                 ),
               ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final messages = await fetchSmsMessages();
-          debugPrint('sms inbox messages: ${messages.length}');
-          setState(() {
-            _messages = messages;
-          });
-        },
-        child: const Icon(Icons.refresh),
-      ),
     );
   }
 }
