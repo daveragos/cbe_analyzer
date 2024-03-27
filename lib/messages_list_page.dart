@@ -14,10 +14,24 @@ class _MessageListState extends State<MessageList> {
   List<SmsMessage> _messages = [];
 
   @override
+  void initState() {
+    super.initState();
+    _fetchMessages(); // Fetch messages when the widget is initialized
+  }
+
+  Future<void> _fetchMessages() async {
+    final messages = await fetchSmsMessages();
+    debugPrint('sms inbox messages: ${messages.length}');
+    setState(() {
+      _messages = messages;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SMS Inbox Example'),
+        title: const Text('CBE Analyzer'),
       ),
       body: Container(
         padding: const EdgeInsets.all(10.0),

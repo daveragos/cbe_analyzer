@@ -20,9 +20,12 @@ class AmountChart extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const Text(
-                'Balance Amounts Over Time',
+                'My CBE Account Balance History',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 20,
               ),
               Expanded(
                 child: Padding(
@@ -36,6 +39,9 @@ class AmountChart extends StatelessWidget {
                     ),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 100,
               ),
             ],
           ),
