@@ -23,7 +23,7 @@ class _MessageListState extends State<MessageList> {
     final messages = await fetchSmsMessages();
     debugPrint('sms inbox messages: ${messages.length}');
     setState(() {
-      _messages = messages;
+      _messages = messages.reversed.toList();
     });
   }
 
