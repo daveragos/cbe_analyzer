@@ -7,7 +7,7 @@
 
 
     <application
-        android:label="cbe_analyzer"
+        android:label="CBE Analyzer"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
