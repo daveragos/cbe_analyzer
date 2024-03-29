@@ -1,11 +1,13 @@
+import 'package:cbe_analyzer/sms_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 class AmountChart extends StatelessWidget {
   final List<SmsMessage> messages;
+  final String bank;
 
-  const AmountChart({super.key, required this.messages});
+  const AmountChart({super.key, required this.messages, required this.bank});
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +21,13 @@ class AmountChart extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
-                'My CBE Account Balance History',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                'My $bank Account Balance History',
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Expanded(
@@ -32,6 +35,15 @@ class AmountChart extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: LineChart(
                     LineChartData(
+                      lineTouchData: LineTouchData(
+                        enabled: true,
+                        touchTooltipData: LineTouchTooltipData(
+                            tooltipBgColor: Colors.grey[400]!,
+                            fitInsideHorizontally: true,
+                            fitInsideVertically: true,
+                            tooltipHorizontalAlignment:
+                                FLHorizontalAlignment.center),
+                      ),
                       gridData: const FlGridData(show: false),
                       titlesData: const FlTitlesData(show: false),
                       borderData: FlBorderData(show: true),
@@ -40,7 +52,7 @@ class AmountChart extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 100,
               ),
             ],
@@ -58,7 +70,18 @@ class AmountChart extends StatelessWidget {
         color: Colors.blue,
         barWidth: 2,
         isStrokeCapRound: true,
-        belowBarData: BarAreaData(show: false),
+        // belowBarData: BarAreaData(
+        //   show: true,
+        //   gradient: LinearGradient(
+        //     colors: [
+        //       Colors.green.withOpacity(0.7),
+        //       Colors.red.withOpacity(0.7),
+        //     ],
+        //     stops: const [0.5, 1.0],
+        //     begin: Alignment.topCenter,
+        //     end: Alignment.bottomCenter,
+        //   ),
+        // ),
       ),
     ];
   }
@@ -66,21 +89,11 @@ class AmountChart extends StatelessWidget {
   List<FlSpot> _generateSpots() {
     final List<FlSpot> spots = [];
     for (int i = 0; i < messages.length; i++) {
-      final double? value = _extractAmount(messages[i].body!);
+      final double? value = extractAmount(messages[i].body!, bank);
       if (value != null) {
         spots.add(FlSpot(i.toDouble(), value));
       }
     }
     return spots;
-  }
-
-  double? _extractAmount(String body) {
-    final RegExp regex =
-        RegExp(r'Your Current Balance is ETB ([0-9]+\.[0-9]+)\.');
-    final match = regex.firstMatch(body);
-    if (match != null) {
-      return double.parse(match.group(1)!);
-    }
-    return null; // Return null if no match found
   }
 }
