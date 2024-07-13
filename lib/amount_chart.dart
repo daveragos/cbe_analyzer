@@ -35,10 +35,9 @@ class AmountChart extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: LineChart(
                     LineChartData(
-                      lineTouchData: LineTouchData(
+                      lineTouchData: const LineTouchData(
                         enabled: true,
                         touchTooltipData: LineTouchTooltipData(
-                            tooltipBgColor: Colors.grey[400]!,
                             fitInsideHorizontally: true,
                             fitInsideVertically: true,
                             tooltipHorizontalAlignment:
