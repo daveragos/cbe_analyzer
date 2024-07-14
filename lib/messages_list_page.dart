@@ -3,7 +3,7 @@
 import 'package:cbe_analyzer/bar_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
-import 'sms_helper.dart';
+import 'services/sms_helper.dart';
 import 'amount_chart.dart';
 
 class MessageList extends StatefulWidget {

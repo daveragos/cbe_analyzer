@@ -1,4 +1,4 @@
-import 'package:cbe_analyzer/sms_helper.dart';
+import 'package:cbe_analyzer/services/sms_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -45,7 +45,7 @@ class AmountChart extends StatelessWidget {
                       ),
                       gridData: const FlGridData(show: false),
                       titlesData: const FlTitlesData(show: false),
-                      borderData: FlBorderData(show: true),
+                      borderData: FlBorderData(show: false),
                       lineBarsData: _generateLineBarsData(),
                     ),
                   ),
