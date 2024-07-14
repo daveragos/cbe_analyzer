@@ -1,23 +1,19 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:cbe_analyzer/bar_chart.dart';
+import 'package:cbe_analyzer/models/transactions.dart';
+import 'package:cbe_analyzer/widgets/balance_line_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
-import 'services/sms_helper.dart';
-import 'amount_chart.dart';
+import 'services/sms_services.dart';
 
-class MessageList extends StatefulWidget {
-  const MessageList({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<MessageList> createState() => _MessageListState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MessageListState extends State<MessageList> {
-  List<SmsMessage> _CBEmessages = [];
-  List<SmsMessage> _CBEBirrmessages = [];
-  List<SmsMessage> _AwashBankmessages = [];
-  List<SmsMessage> _BOAmessages = [];
+class _HomePageState extends State<HomePage> {
+  List<Transaction> _CBEmessages = [];
 
   @override
   void initState() {
@@ -27,41 +23,32 @@ class _MessageListState extends State<MessageList> {
 
   Future<void> _fetchMessages() async {
     _CBEmessages = await fetchSmsMessages(bank: 'CBE');
-    _CBEBirrmessages = await fetchSmsMessages(bank: 'CBEBirr');
-    _AwashBankmessages = await fetchSmsMessages(bank: 'Awash Bank');
-    _BOAmessages = await fetchSmsMessages(bank: 'BOA');
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        appBar: AppBar(
-          bottom: const TabBar(
-            tabs: [
-              Tab(text: 'CBE'),
-              Tab(text: 'CBEBirr'),
-              Tab(text: 'AWASH'),
-              Tab(text: 'BOA'),
-            ],
-          ),
-          title: const Text('CBE Analyzer'),
-        ),
-        body: TabBarView(
-          children: [
-            BankChart(messages: _CBEmessages),
-            BankChart(messages: _CBEBirrmessages),
-            BankChart(messages: _AwashBankmessages),
-            BankChart(messages: _BOAmessages),
+    return Scaffold(
+      appBar: AppBar(
+        bottom: const TabBar(
+          tabs: [
+            Tab(text: 'CBE'),
           ],
         ),
+        title: const Text('CBE Analyzer'),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: BalanceLineChart(transactions: _CBEmessages),
+          ),
+        ],
       ),
     );
   }
 }
 
+/*
 class BankChart extends StatelessWidget {
   const BankChart({
     super.key,
@@ -97,7 +84,7 @@ class BankChart extends StatelessWidget {
     );
   }
 }
-
+*/
 
 
 /* 

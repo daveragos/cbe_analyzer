@@ -1,4 +1,4 @@
-import 'package:cbe_analyzer/messages_list_page.dart';
+import 'package:cbe_analyzer/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -33,7 +33,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: MessageList(),
+      home: HomePage(),
     );
   }
 }
