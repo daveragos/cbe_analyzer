@@ -1,6 +1,5 @@
 import 'package:cbe_analyzer/models/transactions.dart';
 import 'package:flutter_sms_inbox/flutter_sms_inbox.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 List<Transaction> parseSms(List<SmsMessage> sms) {
   List<Transaction> transactions = [];
